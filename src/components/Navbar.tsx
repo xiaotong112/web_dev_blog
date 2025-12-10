@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useAuthStore } from '@/store/useAuthStore';
 import { Button } from './ui/Button';
-import { PenSquare, User, LogOut, Settings, LayoutDashboard } from 'lucide-react';
+import { PenSquare, User, LogOut, Settings, LayoutDashboard, Heart } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -85,6 +85,12 @@ export default function Navbar() {
                             onClick={() => setIsMenuOpen(false)}>
                         <User className="mr-3 h-4 w-4" />
                         My Profile
+                      </Link>
+
+                      <Link href="/user/liked" className="flex w-full items-center px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800"
+                            onClick={() => setIsMenuOpen(false)}>
+                        <Heart className="mr-3 h-4 w-4" />
+                        Liked Articles
                       </Link>
                       
                       {user?.role !== 'ADMIN' && (

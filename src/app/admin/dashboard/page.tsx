@@ -156,12 +156,11 @@ function UserManagement() {
     };
 
     const handleStatusChange = async (userId: number, currentStatus: number) => {
-        // Assuming status 1 is banned, 0 is normal. Docs might say otherwise but let's assume toggle for now.
-        // Actually typical: 0 normal, 1 banned.
-        const newStatus = currentStatus === 0 ? 1 : 0;
+        // 0: Banned, 1: Normal (based on latest API usage)
+        const newStatus = currentStatus === 1 ? 0 : 1;
         try {
             await adminService.updateUserStatus(userId, newStatus);
-            toast.success(`User ${newStatus === 1 ? 'banned' : 'unbanned'}`);
+            toast.success(`User ${newStatus === 0 ? 'banned' : 'unbanned'}`);
             setUsers(users.map(u => u.id === userId ? { ...u, status: newStatus } as any : u));
         } catch(e) { toast.error('Failed to update status'); }
     }
@@ -176,6 +175,7 @@ function UserManagement() {
                         <tr>
                             <th className="px-6 py-3">User</th>
                             <th className="px-6 py-3">Role</th>
+                            <th className="px-6 py-3">Status</th>
                             <th className="px-6 py-3">Stats</th>
                             <th className="px-6 py-3 text-right">Actions</th>
                         </tr>
@@ -197,6 +197,11 @@ function UserManagement() {
                                 <td className="px-6 py-4">
                                     <span className={`px-2 py-0.5 rounded text-xs ${user.role === 'ADMIN' ? 'bg-purple-100 text-purple-600' : 'bg-zinc-100 text-zinc-600'}`}>{user.role}</span>
                                 </td>
+                                <td className="px-6 py-4">
+                                    <span className={`px-2 py-0.5 rounded text-xs ${user.status === 0 ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}`}>
+                                        {user.status === 0 ? 'Banned' : 'Active'}
+                                    </span>
+                                </td>
                                 <td className="px-6 py-4 text-xs text-zinc-500">
                                     Articles: {user.articleCount}
                                 </td>
@@ -204,11 +209,11 @@ function UserManagement() {
                                     {user.role !== 'ADMIN' && (
                                         <Button 
                                             size="sm" 
-                                            variant={ (user as any).status === 1 ? 'outline' : 'danger' }
-                                            className={ (user as any).status === 1 ? 'text-green-600 border-green-200' : 'text-red-500 bg-red-50 border-red-100' }
-                                            onClick={() => handleStatusChange(user.id, (user as any).status || 0)}
+                                            variant={ user.status === 0 ? 'outline' : 'danger' }
+                                            className={ user.status === 0 ? 'text-green-600 border-green-200 hover:bg-green-50' : 'text-red-500 bg-red-50 border-red-100 hover:bg-red-100' }
+                                            onClick={() => handleStatusChange(user.id, user.status ?? 1)}
                                         >
-                                            {(user as any).status === 1 ? 'Unban' : 'Ban'}
+                                            {user.status === 0 ? 'Unban' : 'Ban'}
                                         </Button>
                                     )}
                                 </td>

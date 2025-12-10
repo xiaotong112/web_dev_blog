@@ -11,7 +11,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { useAuthStore } from '@/store/useAuthStore';
 import { toast } from 'react-hot-toast';
-import { Heart, MessageSquare, Share2, CornerDownRight, Trash2 } from 'lucide-react';
+import { Heart, MessageSquare, CornerDownRight, Trash2 } from 'lucide-react';
 
 export default function ArticleDetailPage() {
   const { id } = useParams();
@@ -229,9 +229,6 @@ export default function ArticleDetailPage() {
                >
                    <Heart className={`w-4 h-4 mr-2 ${isLiked ? 'fill-current' : ''}`} /> 
                    {likeCount} Likes
-               </Button>
-               <Button variant="outline">
-                   <Share2 className="w-4 h-4 mr-2" /> Share
                </Button>
            </div>
        </div>

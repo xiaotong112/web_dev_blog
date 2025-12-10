@@ -11,6 +11,7 @@ export interface User {
   likeCount?: number;
   viewCount?: number;
   role?: 'USER' | 'ADMIN'; 
+  status?: number;
 }
 
 export interface Category {
