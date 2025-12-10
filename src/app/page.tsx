@@ -53,7 +53,7 @@ export default function HomePage() {
     try {
         const [catRes, tagRes] = await Promise.all([
             categoryService.getAll(),
-            tagService.getHot(10)
+            tagService.getAll()
         ]);
         if (catRes.code === 200) setCategories(catRes.data);
         if (tagRes.code === 200) setHotTags(tagRes.data);
@@ -197,7 +197,7 @@ export default function HomePage() {
           {/* Tags */}
            <div className="bg-white dark:bg-zinc-900 rounded-2xl p-6 border border-zinc-100 dark:border-zinc-800 shadow-sm">
               <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-                  <Hash className="w-5 h-5 text-green-500" /> Popular Tags
+                  <Hash className="w-5 h-5 text-green-500" /> Tags
               </h3>
               <div className="flex flex-wrap gap-2">
                   {hotTags.map(tag => (
